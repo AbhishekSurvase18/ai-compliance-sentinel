@@ -42,6 +42,14 @@ class CompliancePipelineTests(unittest.TestCase):
 			assess_change({**change, "source": "blog"})
 
 
+	def test_regulatory_agent_message_contains_serialized_assessment(self):
+		change = {"change_id": "REG-01", "source": "SEC", "title": "Margin update", "effective_date": "2027-01-01", "jurisdictions": ["US"], "domains": ["trading"]}
+		result = RegulatoryUpdateTracker().assess(change, "trace-test")
+		payload = result.messages[0].payload
+		self.assertEqual(payload["change"]["change_id"], "REG-01")
+		self.assertEqual(payload["change"]["impact"], "medium")
+
+
 	def test_report_captures_all_four_agents(self):
 		report = run_case(SCENARIOS[0])
 		self.assertEqual(len(report["audit"]["agents"]), 4)

@@ -14,7 +14,7 @@ from rules import (
     calibrate_confidence,
     evaluate_rules,
 )
-from regulatory import assess_change
+from regulatory import assess_change, serialize_change
 
 
 # ============================================================
@@ -498,6 +498,7 @@ class RegulatoryUpdateTracker:
             "report_generator",
             "regulatory_change_assessment",
             {
+                "change": serialize_change(regulatory_change),
                 "change_id": regulatory_change.change_id,
                 "impact": regulatory_change.impact,
                 "human_validation_required":

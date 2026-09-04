@@ -10,7 +10,7 @@ from ingestion import validate_scenario
 from report import verify_audit_chain, write_report
 from storage import ComplianceStore
 from agents import RegulatoryUpdateTracker
-from regulatory import assess_change, serialize_change
+from regulatory import serialize_change
 
 
 app = FastAPI(title="Compliance Sentinel API", version="1.0.0")
@@ -69,4 +69,5 @@ def assess_regulatory_change(change: dict[str, Any]) -> dict[str, Any]:
 		result = RegulatoryUpdateTracker().assess(change, "regulatory-api")
 	except ValueError as error:
 		raise HTTPException(status_code=422, detail=str(error)) from error
-	return {"change": serialize_change(assess_change(change)), "message": result.messages[0].payload}
+	message = result.messages[0].payload
+	return {"change": message["change"], "message": message}
