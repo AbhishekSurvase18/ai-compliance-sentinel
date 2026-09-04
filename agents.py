@@ -877,6 +877,7 @@ def run_case(
             regulatory.agent,
             ReportGenerator.name,
         ],
+        "trace_steps": trace_steps,
         "message_count": len(messages),
         "messages": [
             asdict(message)
