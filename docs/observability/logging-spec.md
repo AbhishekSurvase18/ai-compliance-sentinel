@@ -1,0 +1,3 @@
+# Logging specification
+
+Structured events include `event_id`, `trace_id`, `timestamp`, `actor_id`, `actor_type`, `event_type`, `case_id`, `rule_version`, `calibration_version`, `model_version` when applicable, input/output hashes, outcome, and error code. Confidence scores are adjusted by a versioned false-positive calibration table and must be revalidated against approved historical outcomes. Never log raw credentials or unnecessary personal data. Metrics include throughput, latency, queue age, escalation rate, confidence distribution, conflict rate, false-positive review rate, and audit-write failures.

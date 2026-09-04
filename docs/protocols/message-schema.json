@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AgentMessage",
+  "type": "object",
+  "required": ["sender", "recipient", "message_type", "payload", "trace_id", "timestamp"],
+  "properties": {
+    "sender": {"type": "string", "minLength": 1},
+    "recipient": {"type": "string", "minLength": 1},
+    "message_type": {"type": "string", "minLength": 1},
+    "payload": {"type": "object"},
+    "trace_id": {"type": "string", "format": "uuid"},
+    "timestamp": {"type": "string", "format": "date-time"}
+  },
+  "additionalProperties": false
+}
