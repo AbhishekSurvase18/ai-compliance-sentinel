@@ -56,6 +56,10 @@ def streamlit_app() -> None:
         layout="wide",
     )
 
+    @st.cache_data(ttl=300, show_spinner="Validating built-in scenarios...")
+    def load_builtin_reports() -> list[dict]:
+        return validate_scenarios(SCENARIOS)
+
     # --------------------------------------------------------
     # SESSION STATE
     # --------------------------------------------------------
@@ -87,7 +91,7 @@ def streamlit_app() -> None:
 
             if st.button(
                 "Sign out",
-                use_container_width=True,
+                width="stretch",
             ):
                 st.session_state.reviewer = None
                 st.rerun()
@@ -106,7 +110,7 @@ def streamlit_app() -> None:
             if st.button(
                 "Sign in",
                 type="primary",
-                use_container_width=True,
+                width="stretch",
             ):
 
                 reviewer = authenticate(
@@ -134,6 +138,11 @@ def streamlit_app() -> None:
     st.caption(
         "Four-agent regulatory surveillance for "
         "trading, lending, and communications"
+    )
+
+    st.info(
+        "Built-in validation scope: 20 representative scenarios, "
+        "versioned rules, human escalation, and append-only audit evidence."
     )
 
     # --------------------------------------------------------
@@ -300,7 +309,7 @@ def streamlit_app() -> None:
 
         reports = (
             st.session_state.uploaded_reports
-            or validate_scenarios(SCENARIOS)
+            or load_builtin_reports()
         )
 
     except Exception as error:
